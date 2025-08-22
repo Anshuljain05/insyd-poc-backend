@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  idempotencyKey  String   @unique @map("idempotency_key")
+  actorId         String   @map("actor_id")
+  verb            String
+  objectId        String   @map("object_id")
+  contextJson     Json     @map("context_json")
+  createdAt       DateTime @default(now()) @map("created_at")
+  outbox          Outbox?
+
+  @@map("events")
+}
+
+model Outbox {
+  id        String    @id @default(cuid())
+  eventId   String    @unique @map("event_id")
+  event     Event     @relation(fields: [eventId], references: [id])
+  payload   Json      @map("payload_json")
+  published DateTime? @map("published_at")
+
+  @@map("outbox")
+}
+
+enum NotificationType {
+  SOCIAL
+  COLLABORATION
+  SYSTEM
+}
+
+model Notification {
+  id             String           @id @default(cuid())
+  recipientId    String          @map("recipient_id")
+  type           NotificationType
+  title          String
+  body           String
+  dataJson       Json            @map("data_json")
+  aggregatedFrom String[]        @map("aggregated_from")
+  priority       Int
+  isRead         Boolean         @default(false) @map("is_read")
+  isArchived     Boolean         @default(false) @map("is_archived")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+  deliveries     Delivery[]
+
+  @@index([recipientId, isRead, createdAt(sort: Desc)])
+  @@map("notifications")
+}
+
+model Delivery {
+  id            String      @id @default(cuid())
+  notificationId String     @map("notification_id")
+  notification  Notification @relation(fields: [notificationId], references: [id])
+  channel       String
+  status        String
+  attempts      Int         @default(0)
+  providerId    String?     @map("provider_id")
+  lastError     String?     @map("last_error")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@index([channel, status, createdAt])
+  @@map("deliveries")
+}
+
+model Preference {
+  userId         String   @id @map("user_id")
+  channelsJson   Json     @map("channels_json")
+  typesJson      Json     @map("types_json")
+  digestCadence  String   @map("digest_cadence")
+  quietHours     Json?    @map("quiet_hours")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("preferences")
+}
+
+model EmailUnsubscribe {
+  userId           String   @id @map("user_id")
+  reasons          String[]
+  providerMetadata Json?    @map("provider_metadata")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("email_unsubscribes")
+}
