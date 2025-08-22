@@ -4,8 +4,8 @@
   "description": "Backend API for Insyd notification system",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "npx prisma migrate deploy && ts-node src/index.ts",
+    "build": "npx prisma generate && tsc",
+    "start": "npx prisma migrate deploy && node dist/index.js",
     "dev": "ts-node src/index.ts",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
