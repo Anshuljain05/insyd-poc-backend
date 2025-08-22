@@ -40,7 +40,7 @@ server.listen(port, '0.0.0.0', () => {
 ```env
 DATABASE_URL=<auto-provided-by-railway>
 NODE_ENV=production
-FRONTEND_URL=https://notification-poc-web.vercel.app
+FRONTEND_URL=https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app
 EMAIL_FROM=noreply@notifications.com
 SMTP_HOST=smtp.mailtrap.io
 SMTP_PORT=587
@@ -134,7 +134,7 @@ emailService.verifyConnection().catch(error => {
 ```typescript
 const corsOptions = {
   origin: [
-    'https://notification-poc-web.vercel.app',
+    'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
     'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
     'http://localhost:3000'
   ],

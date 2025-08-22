@@ -33,7 +33,7 @@ emailService.verifyConnection().catch(error => {
 const corsOptions = {
   origin: [
     config.frontendUrl,
-    'https://notification-poc-web.vercel.app',
+    'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
     'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
     'http://localhost:3000',
     'http://localhost:3001'

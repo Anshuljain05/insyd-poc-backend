@@ -6,9 +6,9 @@ This is the backend API for the Insyd Notification System, built with Node.js, E
 
 ## 🚀 Live Demo
 
-- **Backend API**: https://notification-api-production-96c4.up.railway.app/
-- **Health Check**: https://notification-api-production-96c4.up.railway.app/health
-- **Frontend**: https://notification-poc-web.vercel.app/
+- **Backend API**: https://api-production-3aea.up.railway.app/
+- **Health Check**: https://api-production-3aea.up.railway.app/health
+- **Frontend**: https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app/
 
 ## 🏗️ Architecture
 
@@ -106,12 +106,13 @@ SMTP_PASS="your_smtp_password"
 | PUT | `/v1/notifications/preferences` | Update user preferences |
 
 ### WebSocket Connection
-- **URL**: `ws://localhost:3001?userId={userId}`
+- **Local Development**: `ws://localhost:3001?userId={userId}`
+- **Production**: `wss://api-production-3aea.up.railway.app?userId={userId}`
 - **Messages**: JSON format with `type` and `payload` fields
 
 ### Example API Usage
 
-**Create a notification:**
+**Create a notification (Local Development):**
 ```bash
 curl -X POST http://localhost:3001/v1/notifications/events \
   -H "Content-Type: application/json" \
@@ -124,9 +125,26 @@ curl -X POST http://localhost:3001/v1/notifications/events \
   }'
 ```
 
+**Create a notification (Production):**
+```bash
+curl -X POST https://api-production-3aea.up.railway.app/v1/notifications/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "actorId": "user123",
+    "verb": "social.like",
+    "objectId": "post456",
+    "contextJson": {"recipientId": "user789"},
+    "idempotencyKey": "unique-key-123"
+  }'
+```
+
 **Get notifications:**
 ```bash
+# Local
 curl http://localhost:3001/v1/notifications?userId=user789
+
+# Production  
+curl https://api-production-3aea.up.railway.app/v1/notifications?userId=user789
 ```
 
 ## 🗄️ Database Schema
@@ -245,6 +263,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🔗 Related
 
-- **Frontend Repository**: [insyd-notification-frontend](../insyd-notification-frontend)
-- **Live Demo**: https://notification-poc-web.vercel.app/
-- **API Documentation**: Available at `/health` endpoint for status
+- **Frontend Repository**: Frontend web application available separately
+- **Live Demo**: https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app/
+- **API Health Check**: https://api-production-3aea.up.railway.app/health
+
+## 📚 Additional Resources
+
+- **Railway Deployment Guide**: See `RAILWAY_TROUBLESHOOTING.md` in this repository
+- **Environment Setup**: See `.env.example` for configuration template
+- **Prisma Documentation**: https://www.prisma.io/docs/
