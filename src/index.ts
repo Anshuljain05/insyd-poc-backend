@@ -175,7 +175,7 @@ async function initializeDatabase() {
       console.log('🔄 Running database migrations...');
       const { exec } = require('child_process');
       await new Promise((resolve, reject) => {
-        exec('npx prisma migrate deploy', (error: any, stdout: any, stderr: any) => {
+        exec('npx prisma migrate deploy', (error: any, stdout: any) => {
           if (error) {
             console.error('❌ Migration failed:', error);
             reject(error);
@@ -199,7 +199,7 @@ async function startServer() {
     await initializeDatabase();
     
     // Start the server
-    server.listen(port, '0.0.0.0', () => {
+    server.listen(Number(port), '0.0.0.0', () => {
       console.log(`🚀 Notification API server running on port ${port}`);
       console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`🔗 Health check: http://localhost:${port}/health`);
