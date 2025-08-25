@@ -8,7 +8,7 @@ This is the backend API for the Insyd Notification System, built with Node.js, E
 
 - **Backend API**: https://api-production-3aea.up.railway.app/
 - **Health Check**: https://api-production-3aea.up.railway.app/health
-- **Frontend**: https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app/
+- **Frontend**: https://insyd-poc-frontend-nh4cpujbp-anshuljain05s-projects.vercel.app/
 
 ## 🏗️ Architecture
 
