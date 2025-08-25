@@ -2,7 +2,7 @@ export const config = {
   port: process.env.PORT ? parseInt(process.env.PORT) : 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
   databaseUrl: process.env.DATABASE_URL!,
-  frontendUrl: process.env.FRONTEND_URL || 'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
+  frontendUrl: process.env.FRONTEND_URL || 'https://insyd-poc-frontend-nh4cpujbp-anshuljain05s-projects.vercel.app',
   email: {
     from: process.env.EMAIL_FROM || 'noreply@notifications.com',
     smtp: {
