@@ -31,13 +31,30 @@ emailService.verifyConnection().catch(error => {
 
 // Configure CORS with production-safe defaults
 const corsOptions = {
-  origin: [
-    config.frontendUrl,
-    'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
-    'https://insyd-poc-frontend-nh4cpujbp-anshuljain05s-projects.vercel.app',
-    'http://localhost:3000',
-    'http://localhost:3001'
-  ],
+  origin: function (origin: any, callback: any) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow all Vercel deployments for this project temporarily
+    if (origin.includes('vercel.app') || origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    // Allow specific origins
+    const allowedOrigins = [
+      config.frontendUrl,
+      'https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app',
+      'https://insyd-poc-frontend-nh4cpujbp-anshuljain05s-projects.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:3001'
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'User-Agent']
