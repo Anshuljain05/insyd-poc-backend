@@ -69,6 +69,18 @@ app.get('/health', async (_req, res) => {
   }
 });
 
+// Diagnostic endpoint for environment configuration
+app.get('/debug/env', (_req, res) => {
+  res.json({
+    nodeEnv: process.env.NODE_ENV,
+    port: process.env.PORT,
+    hasDatabaseUrl: !!process.env.DATABASE_URL,
+    databaseUrlPrefix: process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 20) + '...' : 'undefined',
+    frontendUrl: config.frontendUrl,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Event ingestion endpoint
 app.post('/v1/notifications/events', async (req, res) => {
   try {
