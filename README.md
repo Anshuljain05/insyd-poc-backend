@@ -264,7 +264,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🔗 Related
 
 - **Frontend Repository**: Frontend web application available separately
-- **Live Demo**: https://notification-frontend-5a262wn8p-anshuljain05s-projects.vercel.app/
+- **Live Demo**: https://insyd-poc-frontend-nh4cpujbp-anshuljain05s-projects.vercel.app/
 - **API Health Check**: https://api-production-3aea.up.railway.app/health
 
 ## 📚 Additional Resources
